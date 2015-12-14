@@ -1,0 +1,18 @@
+{
+  "name": "html-to-pdf",
+  "version": "0.0.1",
+  "description": "Nodejs client for to generate pdf using http://wkhtmltopdf.org",
+  "homepage": "https://github.com/launchunit/html-to-pdf",
+  "author": "Karan Sakhuja <kevin.sakhuja@gmail.com> (http://kevify.com)",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "dependencies": {
+    "jade": "^1.11.0",
+    "wkhtmltopdf": "^0.1.5"
+  },
+  "devDependencies": {
+    "ava": "^0.7.0"
+  }
+}
