@@ -46,7 +46,8 @@ test('Template & outputFile Argument Passed', t => {
     outputFile: './output/test.pdf'
   })
   .then(function(res) {
-    t.is(res, true);
+    t.ok(typeof res === 'object');
+    t.ok(typeof res.outputFile === 'string');
   })
   .catch(function(e) {
     console.log(e);

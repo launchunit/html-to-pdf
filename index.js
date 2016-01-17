@@ -60,6 +60,8 @@ Client.prototype = {
       fs.ensureDirSync(
         path.resolve(parsePath(opts.outputFile).dirname));
 
+      opts.outputFile = path.resolve(opts.outputFile);
+
 
       // Generate HTML & Convert to PDF
       wkhtmltopdf(buildHTML(opts), {
@@ -69,12 +71,14 @@ Client.prototype = {
         marginLeft: 5,
         marginRight: 5
       })
-      .pipe(fs.createWriteStream(path.resolve(opts.outputFile)))
+      .pipe(fs.createWriteStream(opts.outputFile))
       .on('error', err => {
         return reject(err);
       })
       .on('finish', done => {
-        return resolve(true);
+        return resolve({
+          outputFile: opts.outputFile
+        });
       });
 
     });

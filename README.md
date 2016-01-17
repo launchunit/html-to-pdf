@@ -20,7 +20,7 @@ client.generate({
   data: {}, // Data for template
 })
 .then(function(res) {
-  console.log(res);
+  console.log(res.outputFile);
 })
 .catch(function(e) {
   console.log(e);
