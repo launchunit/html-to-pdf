@@ -16,6 +16,7 @@ const client = require('html-to-pdf')(opts);
 // Generate PDF
 client.generate({
   template: 'sample', // (Required)
+  outputFile: './test/out.pdf', // (Required)
   data: {}, // Data for template
 })
 .then(function(res) {
@@ -34,6 +35,5 @@ $ npm test
 
 #### To Do
 - [ ] Pass writable stream
-- [ ] Pass output file with path
 - [ ] Test on Amazon Lambda
 - [ ] Test on iron.IO worker

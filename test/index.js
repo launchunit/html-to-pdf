@@ -17,7 +17,6 @@ test.before(t => {
 
 
 test('No Arguments Passed to Generate', t => {
-
   return client.generate()
   .then(function(res) {
     t.is(res, null);
@@ -27,14 +26,30 @@ test('No Arguments Passed to Generate', t => {
   });
 });
 
-test('Template Argument Passed', t => {
 
-  return client.generate('sample')
+test('Only Template Argument Passed', t => {
+  return client.generate({
+    template: 'sample'
+  })
+  .then(function(res) {
+    t.is(res, null);
+  })
+  .catch(function(e) {
+    t.ok(e instanceof Error);
+  });
+});
+
+
+test('Template & outputFile Argument Passed', t => {
+  return client.generate({
+    template: 'sample',
+    outputFile: './output/test.pdf'
+  })
   .then(function(res) {
     t.is(res, true);
   })
   .catch(function(e) {
+    console.log(e);
     t.is(e, undefined);
-    // t.ok(e instanceof Error);
   });
 });

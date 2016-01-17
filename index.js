@@ -7,7 +7,8 @@
  */
  const path = require('path'),
   wkhtmltopdf = require('wkhtmltopdf'),
-  fs = require('fs');
+  parsePath = require('parse-filepath'),
+  fs = require('fs-extra');
 
 
 /**
@@ -42,34 +43,33 @@ Client.prototype = {
 
   /**
    * @params {String} opts.template (Required)
-   * @params {String} opts.outputPath (Required)
+   * @params {String} opts.outputFile (Required)
    * @params {Object} opts.data
    *
    * @public
    */
-  generate: function(template, data) {
+  generate: function(opts) {
 
     return new Promise((resolve, reject) => {
 
-      if (! template) {
-        return reject(new Error('template is required'));
+      if (! (opts.template && opts.outputFile)) {
+        return reject(new Error('template & outputFile is required.'));
       }
 
-      // Generate HTML
-      const html = buildHTML({
-        template: template.toLowerCase(),
-        data: data
-      });
+      // Make sure the directory exits
+      fs.ensureDirSync(
+        path.resolve(parsePath(opts.outputFile).dirname));
 
-      // Convert to PDF
-      wkhtmltopdf(html, {
+
+      // Generate HTML & Convert to PDF
+      wkhtmltopdf(buildHTML(opts), {
         pageSize: 'Letter',
         marginBottom: 5,
         marginTop: 5,
         marginLeft: 5,
         marginRight: 5
       })
-      .pipe(fs.createWriteStream('./out.pdf'))
+      .pipe(fs.createWriteStream(path.resolve(opts.outputFile)))
       .on('error', err => {
         return reject(err);
       })
